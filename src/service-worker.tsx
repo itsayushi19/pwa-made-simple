@@ -3,7 +3,7 @@ const urlsToCache = ["index.html", "offline.html"];
 const version = "v0.0.1";
 //install sw at first time
 //place to cache assets to speed up the loading time of web page
-self.addEventListener("install", (event: any) => {
+window.self.addEventListener("install", (event: any) => {
   console.log("sw install event");
   event.waitUntil(
     caches.open(version + CACHE_NAME).then((cache) => {
@@ -14,7 +14,7 @@ self.addEventListener("install", (event: any) => {
 });
 //Activate the sw after install
 //Place where old caches are cleared
-self.addEventListener("activate", (event: any) => {
+window.self.addEventListener("activate", (event: any) => {
   console.log("sw activate event");
   event.waitUntil(
     caches.keys().then((cacheNames) =>
@@ -31,7 +31,7 @@ self.addEventListener("activate", (event: any) => {
   );
 });
 //listen for requests
-self.addEventListener("fetch", (event: any) => {
+window.self.addEventListener("fetch", (event: any) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
       return response || fetch(event.request);
